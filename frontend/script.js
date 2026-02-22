@@ -1,4 +1,4 @@
-const API_URL = 'http://127.0.0.1:8000/api';
+const API_URL = 'https://skillswap-w0zt.onrender.com';
 let currentPage = 'landing';
 let currentUser = null;
 let currentToken = null;
