@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillSwap — Student Skill Exchange</title>
+<link rel="stylesheet" href="./style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+</style>
+</head>
+<body>
+    <div id="ss-splash">
+
+  <div class="ss-particles">
+    <div class="ss-dot"></div>
+    <div class="ss-dot"></div>
+    <div class="ss-dot"></div>
+    <div class="ss-dot"></div>
+    <div class="ss-dot"></div>
+    <div class="ss-dot"></div>
+    <div class="ss-dot"></div>
+  </div>
+
+  <div class="ss-wave ss-wave-3"></div>
+  <div class="ss-wave ss-wave-2"></div>
+  <div class="ss-wave ss-wave-1"></div>
+  <div class="ss-gloss"></div>
+
+  <div class="ss-center">
+    <div class="ss-icon-wrap">
+      <div class="ss-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+          <path d="M2 17l10 5 10-5"/>
+          <path d="M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+    </div>
+    <div class="ss-name">SkillSwap</div>
+    <div class="ss-tagline">Learn &middot; Teach &middot; Grow</div>
+    <div class="ss-bar-wrap">
+      <div class="ss-bar-track"></div>
+    </div>
+  </div>
+
+  <div class="ss-recede-2"></div>
+  <div class="ss-recede"></div>
+
+</div>
+<div class="toast" id="toast"></div>
+<div class="modal-overlay" id="skillModal">
+  <div class="modal">
+    <h3 id="modalTitle">Add Skill</h3>
+    <input class="skill-input" id="skillInput" placeholder="e.g. Python, Figma, Public Speaking..." />
+    <div class="modal-actions">
+      <button class="btn btn-outline" onclick="closeModal()">Cancel</button>
+      <button class="btn btn-primary" onclick="confirmAddSkill()">Add Skill</button>
+    </div>
+  </div>
+</div>
+<div class="page active" id="page-landing">
+  <nav class="landing-nav">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      SkillSwap
+    </div>
+    <div style="display:flex;gap:12px">
+      <button class="btn btn-outline" onclick="showPage('login')">Log In</button>
+      <button class="btn btn-primary" onclick="showPage('register')">Get Started</button>
+    </div>
+  </nav>
+  
+  <div class="landing-hero">
+    <div>
+      <div class="hero-badge">🚀 JOIN 10,000+ STUDENTS</div>
+      <h1 class="hero-title">Learn.<br>Teach.<br><span class="accent">Grow Together.</span></h1>
+      <p class="hero-subtitle">The community where your time is your currency. Exchange skills with fellow students and level up together.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary" style="font-size:1rem;padding:14px 28px" onclick="showPage('register')">
+          Get Started Free
+        </button>
+        <a style="color:var(--text-secondary);font-size:0.9rem;cursor:pointer" onclick="showPage('login')">
+          Already have an account? <span style="color:var(--primary);font-weight:600">Log In</span>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-value">450+</div>
+          <div class="stat-label">SKILLS</div>
+        </div>
+        <div>
+          <div class="stat-value">12k</div>
+          <div class="stat-label">HOURS SWAPPED</div>
+        </div>
+        <div>
+          <div class="stat-value">98%</div>
+          <div class="stat-label">SUCCESS RATE</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-image-container">
+      <div class="hero-image-bg">
+        <div style="position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center">
+          <div class="floating-badge top-left" style="top:60px;left:40px">
+            <span style="background:#dbeafe;border-radius:6px;padding:4px 6px;font-size:0.8rem">⌨️</span>
+            <span>
+              <div style="font-size:0.65rem;color:var(--text-muted)">TEACHING</div>
+              <div>React Native</div>
+            </span>
+          </div>
+          <div style="display:flex;gap:30px;align-items:flex-end">
+            <div style="text-align:center">
+              <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;color:white;font-family:var(--font);font-weight:800;font-size:1.4rem;margin:0 auto 8px">A</div>
+              <div style="width:60px;height:4px;background:var(--primary);border-radius:2px;margin:0 auto"></div>
+            </div>
+            <div style="font-size:1.8rem;margin-bottom:30px">⇄</div>
+            <div style="text-align:center">
+              <div style="width:70px;height:70px;border-radius:50%;background:linear-gradient(135deg,#10b981,#059669);display:flex;align-items:center;justify-content:center;color:white;font-family:var(--font);font-weight:800;font-size:1.4rem;margin:0 auto 8px">B</div>
+              <div style="width:60px;height:4px;background:var(--success);border-radius:2px;margin:0 auto"></div>
+            </div>
+          </div>
+          <div class="floating-badge" style="bottom:60px;right:40px">
+            <span style="background:#d1fae5;border-radius:6px;padding:4px 6px;font-size:0.8rem">🎨</span>
+            <span>
+              <div style="font-size:0.65rem;color:var(--text-muted)">LEARNING</div>
+              <div>UI Design</div>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page" id="page-login">
+  <div style="position:absolute;top:20px;left:30px">
+    <div class="logo" onclick="showPage('landing')">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      SkillSwap
+    </div>
+  </div>
+  
+  <div class="login-card">
+    <div class="login-left">
+      <div class="login-illustration">
+        <svg viewBox="0 0 120 120" fill="none">
+          <circle cx="30" cy="70" r="18" fill="#818cf8"/>
+          <circle cx="60" cy="55" r="18" fill="#6366f1"/>
+          <circle cx="90" cy="70" r="18" fill="#4f46e5"/>
+          <rect x="20" y="75" width="20" height="30" rx="4" fill="#818cf8"/>
+          <rect x="50" y="60" width="20" height="45" rx="4" fill="#6366f1"/>
+          <rect x="80" y="75" width="20" height="30" rx="4" fill="#4f46e5"/>
+        </svg>
+      </div>
+      <h2>Connect with Campus Talent</h2>
+      <p>Join thousands of students exchanging design, coding, and language skills across campus.</p>
+    </div>
+    <div class="login-right">
+      <h1>Welcome back!</h1>
+      <p>Log in to continue swapping skills.</p>
+      
+      <div class="form-group">
+        <label class="form-label">University Email</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <input class="form-input" type="email" id="loginEmail" placeholder="name@university.edu">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <label class="form-label" style="margin:0">Password</label>
+          <a href="#" class="forgot-link">Forgot password?</a>
+        </div>
+        <div class="input-wrapper">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input class="form-input" type="password" id="loginPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+        </div>
+      </div>
+      
+      <div class="checkbox-row">
+        <input type="checkbox" id="keepLogin">
+        <label for="keepLogin">Keep me logged in</label>
+      </div>
+      
+      <button class="btn btn-primary btn-full" id="loginBtn" onclick="doLogin()">Log In</button>
+      
+      <div class="login-footer" style="margin-top:16px">
+        New to SkillSwap? <a onclick="showPage('register')">Create an account</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page" id="page-register">
+  <div class="register-header" style="max-width:900px;margin:0 auto;width:100%;padding:24px 20px 0">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:32px">
+      <div class="logo" onclick="showPage('landing')">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        SkillSwap
+      </div>
+    </div>
+  </div>
+  
+  <div class="register-body">
+    <div class="register-form-card">
+      <h2>Join the Exchange</h2>
+      <p>Connect with students to swap skills and grow together.</p>
+      
+      <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <input class="form-input" type="text" id="regName" placeholder="Alex Johnson" oninput="updatePreview()">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">University Email</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          <input class="form-input" type="email" id="regEmail" placeholder="alex@university.edu">
+        </div>
+        <div style="font-size:0.78rem;color:var(--text-muted);margin-top:6px">Please use your institution email for verification</div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          <input class="form-input" type="password" id="regPassword" placeholder="Min. 8 characters">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">University (Optional)</label>
+        <div class="input-wrapper">
+          <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <input class="form-input" type="text" id="regUniversity" placeholder="Stanford University">
+        </div>
+      </div>
+      
+      <button class="btn btn-primary btn-full" id="registerBtn" onclick="doRegister()">
+        Next Step →
+      </button>
+      <div class="login-footer" style="margin-top:12px">
+        Already have an account? <a onclick="showPage('login')">Log in</a>
+      </div>
+    </div>
+    <div class="preview-card">
+      <div class="preview-card-badge">COMING UP NEXT</div>
+      <h3>Personalize your Profile</h3>
+      <p style="font-size:0.875rem;color:var(--text-secondary);margin-bottom:20px;line-height:1.6">
+        The next step will allow you to select which skills you can teach and what you're eager to learn from others.
+      </p>
+      
+      <div class="preview-skills-section">
+        <div class="preview-section-label">I CAN TEACH...</div>
+        <div class="tags-row" id="previewOffered">
+          <button class="add-skill-btn" onclick="openModal('offered')">+ Add Skill</button>
+        </div>
+      </div>
+      
+      <div class="preview-skills-section">
+        <div class="preview-section-label">I WANT TO LEARN...</div>
+        <div class="tags-row" id="previewWanted">
+          <button class="add-skill-btn" onclick="openModal('wanted')">+ Add Skill</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page" id="page-discover">
+  <nav class="navbar">
+    <div class="logo">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      SkillSwap
+    </div>
+    <div class="nav-links">
+      <button class="nav-link active" onclick="showPage('discover')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Home
+      </button>
+      <button class="nav-link" onclick="showPage('messages');loadConversations()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Messages
+      </button>
+    </div>
+    <div id="discoverUserAvatar" class="nav-avatar" style="background:var(--primary);cursor:pointer" onclick="showPage('profile')"></div>
+  </nav>
+  
+  <div class="app-layout">
+    <div class="sidebar">
+      <button class="nav-link active" onclick="showPage('discover')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+        Home
+      </button>
+      <button class="nav-link" onclick="showPage('messages');loadConversations()" style="position:relative">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Messages
+        <span class="badge-count" id="msgBadge" style="display:none">3</span>
+      </button>
+      
+      <div class="sidebar-user">
+        <div class="nav-avatar" id="sidebarAvatar" style="background:var(--primary)"></div>
+        <div class="sidebar-user-info">
+          <div class="sidebar-user-name" id="sidebarName">Loading...</div>
+          <small id="sidebarUniversity">University</small>
+        </div>
+        <button class="sidebar-btn" onclick="logout()" title="Logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="discover-main">
+      <div class="discover-header">
+        <div>
+          <h1>Recommended Swaps</h1>
+          <p>Students matching your interests and skills</p>
+        </div>
+        <button class="filter-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+          Filter
+        </button>
+      </div>
+      
+      <div class="cards-grid" id="matchCards">
+        <div class="empty-state">
+          <div class="empty-state-icon">🔍</div>
+          <p>Loading matches...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page" id="page-profile">
+  <nav class="navbar">
+    <div class="logo" onclick="showPage('discover')">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      SkillSwap
+    </div>
+    <div class="nav-links">
+      <button class="nav-link" onclick="showPage('discover')">← Back to Discover</button>
+    </div>
+    <button class="btn btn-outline" onclick="logout()">Logout</button>
+  </nav>
+  
+  <div class="profile-main">
+    <div class="profile-card">
+      <div class="profile-avatar-wrapper">
+        <div class="profile-avatar" id="profileAvatar">SC</div>
+        <div class="online-dot"></div>
+      </div>
+      <div class="profile-info">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between">
+          <div>
+            <div class="profile-name" id="profileName">Sarah Chen</div>
+            <div class="profile-bio" id="profileBio">UI/UX Enthusiast & Product Designer</div>
+          </div>
+          <div class="profile-verified">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Verified Student
+          </div>
+        </div>
+        <div class="profile-meta">
+          <div class="profile-meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5-10-5z"/></svg>
+            <span id="profileUniversity">Stanford University</span>
+          </div>
+          <div class="profile-meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Member since <span id="profileYear">2022</span></span>
+          </div>
+          <div class="profile-meta-item">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span id="profileCredits">450</span> Credits Earned
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="profile-section">
+      <div class="section-header">
+        <div class="section-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          What I can teach
+        </div>
+      </div>
+      <div class="teach-cards-grid" id="teachSkillsGrid">
+      </div>
+    </div>
+    <div class="profile-section">
+      <div class="section-header">
+        <div class="section-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          What I want to learn
+        </div>
+      </div>
+      <div class="tags-row" id="wantedSkillsTags">
+      </div>
+    </div>
+
+    <div class="profile-section">
+      <div class="section-header">
+        <div class="section-title">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          Recent Reviews
+        </div>
+        <span class="view-all">View All</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer">
+              <div class="reviewer-avatar">AJ</div>
+              <div>
+                <div class="reviewer-name">Alex Johnson</div>
+                <div class="reviewer-meta">Skill: UI Design • 2 weeks ago</div>
+              </div>
+            </div>
+            <div class="review-stars">★★★★★</div>
+          </div>
+          <div class="review-text">"Sarah is an incredible mentor! She helped me redesign my portfolio app and explained the 'why' behind every design decision. Very patient and knowledgeable."</div>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div class="reviewer">
+              <div class="reviewer-avatar" style="background:#10b981">MW</div>
+              <div>
+                <div class="reviewer-name">Mia Wong</div>
+                <div class="reviewer-meta">Skill: User Research • 1 month ago</div>
+              </div>
+            </div>
+            <div class="review-stars">★★★★☆</div>
+          </div>
+          <div class="review-text">"Great session on affinity mapping. Sarah made complex concepts easy to understand. Looking forward to our next swap!"</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="page" id="page-messages">
+  <nav class="navbar">
+    <div class="logo" onclick="showPage('discover')">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+      </div>
+      SkillSwap
+    </div>
+  </nav>
+  
+  <div class="messages-layout">
+    <div class="conversations-panel">
+      <div class="conversations-header">
+        <h2>Messages</h2>
+        <button class="new-chat-btn" title="New chat">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+      </div>
+      <div class="conv-list" id="conversationsList">
+        <div class="empty-state" style="padding:40px 20px">
+          <div class="empty-state-icon">💬</div>
+          <p>No conversations yet</p>
+          <p style="font-size:0.8rem;margin-top:8px">Chat with someone from the Discover page</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chat-panel">
+  
+      <div class="chat-empty" id="chatEmpty">
+        <div class="chat-empty-icon">💬</div>
+        <div style="font-family:var(--font);font-weight:700">Select a conversation</div>
+        <div style="font-size:0.875rem">Choose someone to start chatting with</div>
+      </div>
+
+      <div id="chatActive" style="display:none;flex:1;flex-direction:column;overflow:hidden;display:none">
+        <div class="chat-header">
+          <div class="chat-header-avatar" id="chatPartnerAvatar" style="background:var(--primary)"></div>
+          <div class="chat-header-info">
+            <div class="name" id="chatPartnerName">Alex Rivera</div>
+            <div class="status"><span class="online-text">● ONLINE</span> • Expert in Graphihttp://127.0.0.1:5500/files/frontend/index.htmlc Design • Student at UEMK</div>
+          </div>
+        </div>
+        <div class="messages-area" id="messagesArea">
+          <div class="date-divider">TODAY</div>
+        </div>
+        <div class="chat-input-area">
+          <button class="chat-add-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </button>
+          <input class="chat-input" id="messageInput" placeholder="Type a message or share a learning resource..."
+            onkeydown="if(event.key==='Enter')sendMessage()">
+          <span style="font-size:1.2rem;cursor:pointer">😊</span>
+          <button class="send-btn" onclick="sendMessage()">
+            Send
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="./script.js"></script>
+</body>
+</html>
